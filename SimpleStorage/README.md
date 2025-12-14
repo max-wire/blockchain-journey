@@ -1,66 +1,50 @@
-## Foundry
+# SimpleStorage
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+A basic Solidity smart contract built to practice state variables, updates, and unit testing using Foundry.
 
-Foundry consists of:
+This project is part of my **blockchain learning journey**.
 
-- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
-- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
-- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
-- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+---
 
-## Documentation
+## 📦 Tech Stack
 
-https://book.getfoundry.sh/
+- Solidity
+- Foundry (Forge)
 
-## Usage
+---
 
-### Build
+## 📂 Project Structure
 
-```shell
-$ forge build
-```
+SimpleStorage/
+├── src/
+│ └── SimpleStorage.sol
+├── test/
+│ └── SimpleStorageTest.s.sol
+├── foundry.toml
+└── README.md
 
-### Test
 
-```shell
-$ forge test
-```
+---
 
-### Format
+## 🧠 What This Contract Does
 
-```shell
-$ forge fmt
-```
+- Stores a single unsigned integer
+- Allows updating the stored value
+- Supports multiple updates
+- Includes an increment function
 
-### Gas Snapshots
+---
 
-```shell
-$ forge snapshot
-```
+## 🧪 Testing
 
-### Anvil
+This project uses **Foundry** for unit testing.
 
-```shell
-$ anvil
-```
+Tests cover:
+- Default state values
+- State updates
+- Multiple updates
+- Increment behavior
 
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+Run tests locally with:
+```bash
+forge test
