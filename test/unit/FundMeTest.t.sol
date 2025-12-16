@@ -2,14 +2,14 @@
 
 pragma solidity ^0.8.24;
 
-import {Test, console} from "forge-std/Test.sol";
+import {Test} from "forge-std/Test.sol";
 import {FundMe} from "../../src/FundMe.sol";
 import {DeployFundMe} from "../../script/DeployFundMe.s.sol";
 
 contract FundMeTest is Test {
     FundMe fundMe;
 
-    address USER = makeAddr("user");
+    address user = makeAddr("user");
     uint256 constant SEND_VALUE = 0.1 ether; // 100000000000000000
     uint256 constant STARTING_BALANCE = 10 ether;
 
@@ -17,15 +17,13 @@ contract FundMeTest is Test {
         // fundMe = new FundMe(0x694AA1769357215DE4FAC081bf1f309aDC325306);
         DeployFundMe deployFundMe = new DeployFundMe();
         fundMe = deployFundMe.run();
-        vm.deal(USER, STARTING_BALANCE);
+        vm.deal(user, STARTING_BALANCE);
     }
 
     function testMinimumDollarIsFive() public view {
         assertEq(fundMe.MINIMUM_USD(), 5e18);
     }
     function testOwnerIsMsgSender() public view {
-        console.log(fundMe.getOwner());
-        console.log(msg.sender);
         assertEq(fundMe.getOwner(), msg.sender);
     }
     function testFundFailsWithoutEnoughEth() public {
@@ -34,29 +32,29 @@ contract FundMeTest is Test {
         fundMe.fund(); // send 0 value
     }
     function testFundUpdatesFundedDataStructure() public {
-        vm.prank(USER); // The next Tx will be sent by USER
+        vm.prank(user); // The next Tx will be sent by USER
         fundMe.fund{value: SEND_VALUE}();
 
-        uint256 amountFunded = fundMe.getAddressToAmountFunded(USER);
+        uint256 amountFunded = fundMe.getAddressToAmountFunded(user);
         assertEq(amountFunded, SEND_VALUE);
     }
 
     function testAddsFunderToArrayOfFunders() public {
-        vm.prank(USER);
+        vm.prank(user);
         fundMe.fund{value: SEND_VALUE}();
 
         address funder = fundMe.getFunder(0);
-        assertEq(funder, USER);
+        assertEq(funder, user);
     }
 
     modifier funded() {
-        vm.prank(USER);
+        vm.prank(user);
         fundMe.fund{value: SEND_VALUE}();
         _;
     }
 
     function testOnlyOwnerCanWithdraw() public funded {
-        vm.prank(USER);
+        vm.prank(user);
         vm.expectRevert();
         fundMe.withdraw();
     }

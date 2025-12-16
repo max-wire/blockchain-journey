@@ -5,7 +5,7 @@
 
 pragma solidity ^0.8.24;
 
-import {Script, console} from "forge-std/Script.sol";
+import {Script} from "forge-std/Script.sol";
 import {DevOpsTools} from "foundry-devops/src/DevOpsTools.sol";
 import {FundMe} from "../src/FundMe.sol";
 
@@ -16,7 +16,6 @@ contract FundFundMe is Script {
         vm.startBroadcast();
         FundMe(payable(mostRecentlyDeployed)).fund{value: SEND_VALUE}();
         vm.stopBroadcast();
-        console.log("Funded FundMe with %s", SEND_VALUE);
     }
 
     function run() external {

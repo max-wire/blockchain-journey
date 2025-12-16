@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.24;
 
-import {Test, console} from "forge-std/Test.sol";
+import {Test} from "forge-std/Test.sol";
 import {FundMe} from "../../src/FundMe.sol";
 import {DeployFundMe} from "../../script/DeployFundMe.s.sol";
 import {FundFundMe, WithdrawFundMe} from "../../script/Interactions.s.sol";
@@ -10,14 +10,14 @@ import {FundFundMe, WithdrawFundMe} from "../../script/Interactions.s.sol";
 contract InteractionTest is Test {
     FundMe fundMe;
 
-    address USER = makeAddr("user");
+    address user = makeAddr("user");
     uint256 constant SEND_VALUE = 0.1 ether; // 100000000000000000
     uint256 constant STARTING_BALANCE = 10 ether;
 
     function setUp() external {
         DeployFundMe deploy = new DeployFundMe();
         fundMe = deploy.run();
-        vm.deal(USER, STARTING_BALANCE);
+        vm.deal(user, STARTING_BALANCE);
     }
 
     function testUserCanFundInteractions() public {

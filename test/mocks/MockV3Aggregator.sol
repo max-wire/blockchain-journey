@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
+import {
+    AggregatorV3Interface
+} from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
 
 /**
  * @title MockV3Aggregator
@@ -12,7 +14,7 @@ import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interf
  * its answer is unimportant
  */
 contract MockV3Aggregator is AggregatorV3Interface {
-    uint256 public constant version = 4;
+    uint256 public constant VERSION = 4;
 
     uint8 public decimals;
     int256 public latestAnswer;
@@ -28,6 +30,10 @@ contract MockV3Aggregator is AggregatorV3Interface {
         updateAnswer(_initialAnswer);
     }
 
+    function version() external pure override returns (uint256) {
+        return 4;
+    }
+
     function updateAnswer(int256 _answer) public {
         latestAnswer = _answer;
         latestTimestamp = block.timestamp;
@@ -37,7 +43,12 @@ contract MockV3Aggregator is AggregatorV3Interface {
         getStartedAt[latestRound] = block.timestamp;
     }
 
-    function updateRoundData(uint80 _roundId, int256 _answer, uint256 _timestamp, uint256 _startedAt) public {
+    function updateRoundData(
+        uint80 _roundId,
+        int256 _answer,
+        uint256 _timestamp,
+        uint256 _startedAt
+    ) public {
         latestRound = _roundId;
         latestAnswer = _answer;
         latestTimestamp = _timestamp;
@@ -46,25 +57,49 @@ contract MockV3Aggregator is AggregatorV3Interface {
         getStartedAt[latestRound] = _startedAt;
     }
 
-    function getRoundData(uint80 _roundId)
+    function getRoundData(
+        uint80 _roundId
+    )
         external
         view
-        returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)
+        returns (
+            uint80 roundId,
+            int256 answer,
+            uint256 startedAt,
+            uint256 updatedAt,
+            uint80 answeredInRound
+        )
     {
-        return (_roundId, getAnswer[_roundId], getStartedAt[_roundId], getTimestamp[_roundId], _roundId);
+        return (
+            _roundId,
+            getAnswer[_roundId],
+            getStartedAt[_roundId],
+            getTimestamp[_roundId],
+            _roundId
+        );
     }
 
     function latestRoundData()
         external
         view
-        returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)
+        returns (
+            uint80 roundId,
+            int256 answer,
+            uint256 startedAt,
+            uint256 updatedAt,
+            uint80 answeredInRound
+        )
     {
+        // casting to uint80 is safe because latestRound is a small mock value
+        // forge-lint: disable-next-line(unsafe-typecast)
+        uint80 round = uint80(latestRound);
+
         return (
-            uint80(latestRound),
+            round,
             getAnswer[latestRound],
             getStartedAt[latestRound],
             getTimestamp[latestRound],
-            uint80(latestRound)
+            round
         );
     }
 
