@@ -1,0 +1,16 @@
+[33m8da3a85[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Fix withdraw call syntax and resolve Foundry lint warnings
+[33m778cb9d[m Add Foundry Fund Me project
+[33mc6669fd[m modules
+[33m4d5fe42[m Revise README for SimpleStorage project
+[33mf84fd4b[m Add SimpleStorage Foundry project
+[33mdf52ace[m Add gas and storage concept documentation
+[33m42fcad3[m Add README for mappings module
+[33m0d4bf13[m Add MappingStorage contract combining mappings and arrays
+[33mee7fbb6[m Add README for structs and arrays module
+[33m6e32145[m Add PeopleStorage contract using structs and arrays
+[33mf185edf[m Add README for Solidity basics module
+[33m6ad1034[m Update SimpleStorage.sol
+[33m0a7d419[m Add SimpleStorage contract for Solidity basics
+[33m89222f9[m Add personal mission statement
+[33m5498a5f[m Add project overview and learning mission
+[33m9f85ae8[m Initial commit
